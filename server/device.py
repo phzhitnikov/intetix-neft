@@ -30,11 +30,14 @@ class DeviceCollector:
 
     @staticmethod
     def find_device(port):
+        bytes_line = ''
+        line = ''
         try:
             with serial.Serial(port.device, cfg.SERIAL_SPEED, timeout=cfg.COM_TIMEOUT) as ser:
                 # Read data and try to get identification packet
                 # Format: Init <device_type> <device_id>
-                line = read_line(ser)
+                bytes_line = ser.readline()
+                line = bytes_line.decode('utf-8', 'replace').strip()
                 device_data = line.split(' ')
                 if not line.startswith('Init') or len(device_data) != 3:
                     raise ValueError(f'Unknown packet: {line}')
@@ -44,6 +47,8 @@ class DeviceCollector:
                 return DeviceData(device_id, device_type, port.device)
         except Exception as e:
             print(f'Skipping device: {port.device}. Error: {e}')
+            print(bytes_line)
+            print(line)
 
 
 class SerialDeviceThread(threading.Thread):
