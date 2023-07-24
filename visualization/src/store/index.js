@@ -9,6 +9,7 @@ const _ = require('lodash');
 
 const devices = [
     {'id': '0'},  // button device
+
     // Timano
     {'id': '12',  'address': '71 CB F8 26', 'position': {left: "2506px", top: "763px"}},
     {'id': '13',  'address': '30 31 E1 1A', 'position': {left: "2461px", top: "502px"}},
@@ -20,7 +21,7 @@ const devices = [
     {'id': '7',  'address': '50 5B 85 1A', 'position': {left: "2538px", top: "345px"}},
     {'id': '8',  'address': '25 4C 0A AD', 'position': {left: "2677px", top: "761px"}},
     {'id': '9',  'address': 'C0 09 64 21', 'position': {left: "1505px", top: "1353px"}},
-    {'id': '10',  'address': '81 5F 9D 26', 'position': {left: "1291px", top: "1724px"}},
+    {'id': '10', 'address': '81 5F 9D 26', 'position': {left: "1291px", top: "1724px"}},
     {'id': '11', 'address': '81 73 94 26', 'position': {left: "1086px",  top: "678px"}},
 
     // Baku

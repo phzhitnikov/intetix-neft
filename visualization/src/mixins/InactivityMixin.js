@@ -18,11 +18,18 @@ export default {
         exitToMainPage() {},
 
         resetInactivityTimer() {
+            // Remove timers
             clearTimeout(this.inactivityWarningTimer);
-            this.showInactivityWarning = false;
-
             clearTimeout(this.inactivityExitTimer);
 
+            // Clear vars
+            this.inactivityWarningTimer = null;
+            this.inactivityExitTimer = null;
+
+            // Hide warnings
+            this.showInactivityWarning = false;
+
+            // Prepare inactivity callbacks
             this.inactivityWarningTimer = setTimeout(() => {
                 this.showInactivityWarning = true;
             }, this.inactivityWarningTimeSec * 1000);

@@ -51,15 +51,11 @@ export default {
                 return {visibility: "hidden"};
             }
 
-            // let position = this.flaskPositions[this.currentFlaskIdx];
-
             return {
                 width: "170px",
                 height: "170px",
                 bottom: "0em",
                 right: "0em",
-                // left: `calc(50% - ${position.left})`,
-                // top: `calc(50% - ${position.top})`,
                 transform: "translate(-50%, -50%)",
                 visibility: "visible",
                 ...this.flaskPositions[this.currentFlaskIdx] || {}
