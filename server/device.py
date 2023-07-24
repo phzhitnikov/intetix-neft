@@ -1,0 +1,127 @@
+import threading
+from concurrent.futures import as_completed, ThreadPoolExecutor
+from dataclasses import dataclass
+from time import sleep
+
+import serial
+from serial.tools import list_ports
+
+import config as cfg
+from socketio_server import SocketIOServer
+from utils import read_line
+
+
+@dataclass
+class DeviceData:
+    id: int
+    type: str
+    port: str
+
+
+class DeviceCollector:
+    @staticmethod
+    def get_devices():
+        executor = ThreadPoolExecutor()
+
+        ports = list_ports.comports()
+        futures = [executor.submit(DeviceCollector.find_device, p) for p in ports]
+        results = [future.result() for future in as_completed(futures)]
+        return [r for r in results if r is not None]
+
+    @staticmethod
+    def find_device(port):
+        try:
+            with serial.Serial(port.device, cfg.SERIAL_SPEED, timeout=cfg.COM_TIMEOUT) as ser:
+                # Read data and try to get identification packet
+                # Format: Init <device_type> <device_id>
+                line = read_line(ser)
+                device_data = line.split(' ')
+                if not line.startswith('Init') or len(device_data) != 3:
+                    raise ValueError(f'Unknown packet: {line}')
+
+                _, device_type, device_id = device_data
+                print(f'Found {device_type} #{device_id} on port {port.device}')
+                return DeviceData(device_id, device_type, port.device)
+        except Exception as e:
+            print(f'Skipping device: {port.device}. Error: {e}')
+
+
+class SerialDeviceThread(threading.Thread):
+    MAX_CONNECTION_ATTEMPTS = 3
+
+    def __init__(self, device_data: DeviceData, server: SocketIOServer):
+        super(SerialDeviceThread, self).__init__()
+        self.daemon = True
+
+        self.serial = None
+        self.server = server
+        self.device_data = device_data
+        self.alive = True
+        self._write_lock = threading.Lock()
+
+        self.connect()
+
+    def connect(self) -> bool:
+        for i in range(self.MAX_CONNECTION_ATTEMPTS):
+            try:
+                self.serial = serial.Serial(self.device_data.port, cfg.SERIAL_SPEED, timeout=cfg.COM_TIMEOUT)
+                self.alive = True
+                return True
+            except serial.SerialException as e:
+                self._log(f"Failed to connect to serial port. Retry #{i} in 3 seconds. Error: {e}")
+                sleep(3)
+
+        return False
+
+    def stop(self):
+        self.alive = False
+        if hasattr(self.serial, 'cancel_read'):
+            self.serial.cancel_read()
+        self.join(2)
+
+    def on_data_received(self, data: str):
+        self._log(data)
+        self.server.send_data(self.device_data.type, data)
+
+    def on_error(self, exc: Exception):
+        self._log(f'Got exception: {str(exc)}')
+
+    def run(self):
+        if not hasattr(self.serial, 'cancel_read'):
+            self.serial.timeout = 3
+
+        print(f"Connected to {self.serial.port}")
+        while self.alive and self.serial.is_open:
+            try:
+                # Read all that is there or wait for one byte (blocking)
+                data = read_line(self.serial)
+            except serial.SerialException as e:
+                # Probably some I/O problem such as disconnected USB serial
+                self.on_error(e)
+
+                # Try to reconnect
+                if not self.connect():
+                    break
+            else:
+                if data:
+                    try:
+                        self.on_data_received(data)
+                    except Exception as e:
+                        self.on_error(e)
+                        break
+
+        self.alive = False
+
+    def write(self, data):
+        with self._write_lock:
+            return self.serial.write(data)
+
+    def close(self):
+        # Use the lock to let other threads finish writing
+        with self._write_lock:
+            # First stop reading, so that closing can be done on idle port
+            self.stop()
+            self.serial.close()
+
+    def _log(self, msg):
+        print(f'[{self.device_data.type} {self.device_data.id}]: {msg}')
