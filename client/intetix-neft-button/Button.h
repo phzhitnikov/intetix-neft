@@ -12,7 +12,7 @@ public:
               activeLevel(activeLevel) {
         if (pin != -1) {
             debouncer.attach(pin, INPUT_PULLUP);
-            debouncer.interval(50);
+            debouncer.interval(3000);  // FIXME: temporary
         }
     }
 
