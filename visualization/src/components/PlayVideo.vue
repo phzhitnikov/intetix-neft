@@ -1,13 +1,14 @@
 <template>
   <div
-      class="video_wrapper"
-      :class="i === selectedIndex ? 'd-block' : 'd-none'"
-      v-for="(item, i) of videos"
-      :key="i"
+      class="video_wrapper d-block"
   >
     <video
+        v-for="(item, i) of videos"
+        :key="i"
+
         ref="videoPlayer"
         class="video"
+        :class="i === selectedIndex ? 'd-block' : 'd-none'"
         :src="require(`../assets/video/${videoFolder}/${item}`)"
         type="video/mp4"
         preload
