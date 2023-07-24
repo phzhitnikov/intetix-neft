@@ -1,0 +1,116 @@
+/* ======================== Video page ======================== */
+.video_page {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 100%;
+}
+
+/*=================== Checkbox video============== */
+.checkbox_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  height: 145px;
+  min-width: 1000px;
+}
+.checkbox {
+  width: 132px;
+  height: 132px;
+  margin: 11px;
+  border-radius: 9px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid black;
+  opacity: 0.5;
+  display: none;
+}
+.checkbox_active {
+  opacity: 1;
+}
+/* Checkbox burger */
+.checkbox_burger {
+  position: absolute;
+  top: 30px;
+  right: -150px;
+  width: 110px;
+  margin-left: 40px;
+  cursor: pointer;
+  z-index: 10;
+}
+.checkbox_burger span {
+  transition: all 0.2s;
+  display: block;
+  width: 100%;
+  height: 16px;
+  margin: 13px 10px;
+  background-color: black;
+  border-radius: 10px;
+}
+
+.toggle .line1 {
+  transform: rotateZ(45deg) translateY(248%);
+}
+.toggle .line2 {
+  opacity: 0;
+}
+.toggle .line3 {
+  transform: rotateZ(-45deg) translateY(-256%);
+}
+/* toggle qushish kerak ushanda ichidahi line larni boshqarish mumkin  */
+/*  */
+/*  */
+/*     */
+/*============================= Video player=========================== */
+.video_wrapper {
+  width: 2070px;
+  height: 2160px;
+  position: relative;
+  margin: 10px;
+  display: none;
+  border-radius: 79px;
+  overflow: hidden;
+}
+.video {
+  width: 3840px;
+  height: 2160px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+}
+/* ====================== Home page back icon =========================== */
+.home_icon_wrapper {
+  position: absolute;
+  bottom: 3%;
+  left: 3.5%;
+  width: 120px;
+  height: 120px;
+  background-color: #e5e5eb;
+  padding: 11px 20px;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-none {
+  display: none !important;
+}
+
+
+.flask_indicator_wrapper {
+  width: 3840px;
+  height: 2160px;
+  margin: 10px;
+
+  overflow: hidden;
+  pointer-events: none;
+}
