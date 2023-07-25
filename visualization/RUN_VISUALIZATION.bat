@@ -1,3 +1,3 @@
 @echo off
 
-npx serve dist
+start chrome "http://localhost:3000" && npx serve dist
