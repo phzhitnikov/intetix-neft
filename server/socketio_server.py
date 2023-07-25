@@ -23,7 +23,7 @@ class SocketIOServer:
         self.sio.run(self.app, host=self.host, port=self.port, allow_unsafe_werkzeug=True)
 
     def send_data(self, event, data, room=None):
-        print('Sending data:', event, data)
+        # print('Sending data:', event, data)
         # Emit the data to all connected clients
         self.sio.emit(event, data, room=room)
 

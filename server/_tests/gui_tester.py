@@ -82,7 +82,7 @@ class MainWindow(QMainWindow):
 
         device_id = button.property("id")
         action = button.property("action")
-        self.worker_thread.server.send_data('button', f'Button {device_id}: {action}')
+        self._send_data('button', f'Button {device_id}: {action}')
 
     def checkbox_changed(self, state):
         checkbox = self.sender()
@@ -95,7 +95,11 @@ class MainWindow(QMainWindow):
         else:
             address = "EMPTY"
 
-        self.worker_thread.server.send_data('rfid', f'Reader {device_id}: {address}')
+        self._send_data('rfid', f'Reader {device_id}: {address}')
+
+    def _send_data(self, event, data):
+        print(f'[{event}] {data}')
+        self.worker_thread.server.send_data(event, data)
 
     def get_element_by_property(self, el_class, name, value):
         for child in self.findChildren(el_class):
