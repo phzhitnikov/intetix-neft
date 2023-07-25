@@ -32,11 +32,14 @@ class DeviceCollector:
 
     @staticmethod
     def find_device(port):
+        def _log(msg):
+            print(f'[{port.device}]: {msg}')
+
         bytes_line = ''
         line = ''
         try:
-            with serial.Serial(port.device, cfg.SERIAL_SPEED, timeout=cfg.COM_TIMEOUT) as ser:
-                for i in range(DeviceCollector.PACKET_TRIES):
+            for i in range(DeviceCollector.PACKET_TRIES):
+                with serial.Serial(port.device, cfg.SERIAL_SPEED, timeout=cfg.COM_TIMEOUT) as ser:
                     # Read data and try to get identification packet
                     # Format: Init <device_type> <device_id>
                     bytes_line = ser.readline()
@@ -44,18 +47,20 @@ class DeviceCollector:
 
                     device_data = line.split(' ')
                     if not line.startswith('Init') or len(device_data) != 3:
-                        print(f'Unknown packet: \n{line}\n{bytes_line}')
+                        _log(f'Unknown packet: \n{line}\n{bytes_line}')
+                        sleep(i * 0.5)
                         continue
 
                     _, device_type, device_id = device_data
-                    print(f'Found {device_type} #{device_id} on port {port.device}')
+                    _log(f'Found {device_type} #{device_id}')
                     return DeviceData(device_id, device_type, port.device)
 
-                raise ValueError(f'Failed to detect packet')
+            raise ValueError(f'Failed to detect packet')
         except Exception as e:
-            print(f'Skipping device: {port.device}. Error: {e}')
+            _log(f'Skipping device. Error: {e}')
             print(bytes_line)
             print(line)
+
 
 
 class SerialDeviceThread(threading.Thread):
