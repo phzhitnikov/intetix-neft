@@ -19,6 +19,8 @@ class DeviceData:
 
 
 class DeviceCollector:
+    PACKET_TRIES = 3
+
     @staticmethod
     def get_devices():
         executor = ThreadPoolExecutor()
@@ -34,17 +36,22 @@ class DeviceCollector:
         line = ''
         try:
             with serial.Serial(port.device, cfg.SERIAL_SPEED, timeout=cfg.COM_TIMEOUT) as ser:
-                # Read data and try to get identification packet
-                # Format: Init <device_type> <device_id>
-                bytes_line = ser.readline()
-                line = bytes_line.decode('utf-8', 'replace').strip()
-                device_data = line.split(' ')
-                if not line.startswith('Init') or len(device_data) != 3:
-                    raise ValueError(f'Unknown packet: {line}')
+                for i in range(DeviceCollector.PACKET_TRIES):
+                    # Read data and try to get identification packet
+                    # Format: Init <device_type> <device_id>
+                    bytes_line = ser.readline()
+                    line = bytes_line.decode('utf-8', 'ignore').strip()
 
-                _, device_type, device_id = device_data
-                print(f'Found {device_type} #{device_id} on port {port.device}')
-                return DeviceData(device_id, device_type, port.device)
+                    device_data = line.split(' ')
+                    if not line.startswith('Init') or len(device_data) != 3:
+                        print(f'Unknown packet: \n{line}\n{bytes_line}')
+                        continue
+
+                    _, device_type, device_id = device_data
+                    print(f'Found {device_type} #{device_id} on port {port.device}')
+                    return DeviceData(device_id, device_type, port.device)
+
+                raise ValueError(f'Failed to detect packet')
         except Exception as e:
             print(f'Skipping device: {port.device}. Error: {e}')
             print(bytes_line)
