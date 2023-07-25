@@ -31,7 +31,9 @@
     </div>
 
     <div style="position:absolute; z-index:0;">
-      <PlayVideo :videos="videos" :selectedIndex="currentVideoIdx" :videoFolder="videoFolder"/>
+      <PlayVideo :videos="videos" :selectedIndex="currentVideoIdx" :videoFolder="videoFolder">
+        <HomeButton/>
+      </PlayVideo>
     </div>
 
     <div class="flask_indicator_wrapper" style="z-index:1;"
@@ -54,10 +56,11 @@ import {LottieAnimation} from "lottie-web-vue"
 import PlayVideo from "@/components/PlayVideo";
 import InactivityMixin from "@/mixins/InactivityMixin";
 import FlaskPageMixin from "@/mixins/FlaskPageMixin";
+import HomeButton from "@/components/HomeButton.vue";
 
 export default {
   components: {
-    PlayVideo, LottieAnimation
+    HomeButton, PlayVideo, LottieAnimation
   },
 
   mixins: [InactivityMixin, FlaskPageMixin],

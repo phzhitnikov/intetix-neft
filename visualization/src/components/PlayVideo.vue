@@ -15,16 +15,12 @@
         muted
     ></video>
 
-    <HomeButton/>
+    <slot></slot>
   </div>
 </template>
 
 <script>
-import HomeButton from "@/components/HomeButton.vue";
-
 export default {
-  components: {HomeButton},
-
   props: {
     videos: Array,
     selectedIndex: Number,

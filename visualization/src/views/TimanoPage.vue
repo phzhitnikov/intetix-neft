@@ -34,7 +34,9 @@
       <PlayVideo :videos="videos"
                  :selectedIndex="currentVideoIdx"
                  :videoFolder="videoFolder"
-      />
+      >
+        <HomeButton/>
+      </PlayVideo>
     </div>
 
     <div class="flask_indicator_wrapper" style="z-index:1;" v-show="currentFlaskIdx >= 0">
@@ -56,12 +58,13 @@ import {LottieAnimation} from "lottie-web-vue"
 import PlayVideo from "@/components/PlayVideo";
 import InactivityMixin from "@/mixins/InactivityMixin";
 import FlaskPageMixin from "@/mixins/FlaskPageMixin";
+import HomeButton from "@/components/HomeButton.vue";
 
 export default {
   components: {
-    PlayVideo,
-    LottieAnimation
+    HomeButton, PlayVideo, LottieAnimation
   },
+
   mixins: [InactivityMixin, FlaskPageMixin],
 
   data() {
@@ -80,8 +83,6 @@ export default {
     this.blinkFlaskIndicator();
   },
 
-  methods: {
-
-  }
+  methods: {}
 };
 </script>
