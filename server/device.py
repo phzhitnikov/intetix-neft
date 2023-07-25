@@ -19,7 +19,7 @@ class DeviceData:
 
 
 class DeviceCollector:
-    PACKET_TRIES = 3
+    PACKET_TRIES = 5
 
     @staticmethod
     def get_devices():
@@ -35,8 +35,6 @@ class DeviceCollector:
         def _log(msg):
             print(f'[{port.device}]: {msg}')
 
-        bytes_line = ''
-        line = ''
         try:
             for i in range(DeviceCollector.PACKET_TRIES):
                 with serial.Serial(port.device, cfg.SERIAL_SPEED, timeout=cfg.COM_TIMEOUT) as ser:
@@ -47,7 +45,7 @@ class DeviceCollector:
 
                     device_data = line.split(' ')
                     if not line.startswith('Init') or len(device_data) != 3:
-                        _log(f'Unknown packet: \n{line}\n{bytes_line}')
+                        _log(f'Unknown packet: {line} | {bytes_line}')
                         sleep(i * 0.5)
                         continue
 
@@ -58,8 +56,6 @@ class DeviceCollector:
             raise ValueError(f'Failed to detect packet')
         except Exception as e:
             _log(f'Skipping device. Error: {e}')
-            print(bytes_line)
-            print(line)
 
 
 class SerialDeviceThread(threading.Thread):
