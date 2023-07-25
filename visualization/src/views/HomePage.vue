@@ -112,7 +112,7 @@
           БАКУ - САНКТ-ПЕТЕРБУРГ <br/>
           <span> (конец XIX века - начало XX века)</span>
         </router-link>
-        <div class="ladoshka_timano_anime">
+        <div class="ladoshka_baku_anime">
           <LottieAnimation
               ref="anim-lad3"
               :animationData="Ladoshka"
