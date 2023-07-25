@@ -36,20 +36,12 @@
               class="ladoshka_timano_anime"
               :class="interval == 3 ? 'home_animation' : ''"
           >
-
-            <LottieAnimation
-                ref="anim-lad11"
-                :animationData="Ladoshka"
-                :loop="true"
-                :autoPlay="false"
-                class="ladoshka ladoshka-hide"
-            />
             <LottieAnimation
                 ref="anim-lad1"
                 :animationData="Ladoshka"
                 :loop="true"
                 :autoPlay="false"
-                class="ladoshka2"
+                class="ladoshka"
             />
           </div>
         </div>
@@ -148,37 +140,41 @@ export default {
   },
   data() {
     return {
-      interval: 1,
+      interval: 2,
+      animSwitchTimer: null,
       Ladoshka,
     };
   },
   mounted() {
     this.resetButtonValue();
 
-    // TODO: refactor this mess
-    this.interval = 2
-    setInterval(() => {
-      if (this.interval == 3) {
-        this.interval = 0;
-      }
-      if (this.$refs["anim-lad1"]) {//Так как этот таймер работает на всех страницах - надо проверять что у нас существует такой класс
-        if (this.interval == 0) {
+    this.animSwitchTimer = setInterval(() => {
+      switch (this.interval) {
+        case 0:
           this.$refs["anim-lad1"].stop();
-          this.$refs["anim-lad11"].stop();
           this.$refs["anim-lad2"].play();
-        } else if (this.interval == 1) {
+          break;
+
+        case 1:
           this.$refs["anim-lad2"].stop();
           this.$refs["anim-lad3"].play();
+          break;
 
-        } else if (this.interval == 2) {
+        case 2:
           this.$refs["anim-lad3"].stop();
           this.$refs["anim-lad1"].play();
-          this.$refs["anim-lad11"].play();
+          break;
 
-        }
+        case 3:
+          this.interval = 0;
       }
+
       this.interval++;
     }, 3600);
+  },
+
+  unmounted() {
+    clearInterval(this.animSwitchTimer);
   },
 
   computed: {

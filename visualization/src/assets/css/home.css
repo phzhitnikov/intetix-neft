@@ -93,7 +93,6 @@ body {
 }
 
 /* Right Sibir */
-
 .kv .right {
   background: url("@/assets/images/karta_fon.png");
   background-size: cover;
@@ -157,22 +156,11 @@ body {
   /*display: none;*/
   visibility: hidden;
 }
-.kv .ladoshka2 {
-  top: -135px;
-  position: relative;
-  visibility: hidden;
-}
 
 .kv .home_animation .ladoshka {
   /*display: block;*/
   visibility: visible;
 }
-
-.kv .home_animation .ladoshka2 {
-  /*display: block;*/
-  visibility: visible;
-}
-
 
 .kv .right span {
   font-size: 25.5px;
@@ -180,7 +168,6 @@ body {
 }
 
 /* Left Sibir */
-
 .kv .left {
   position: absolute;
   display: flex;
@@ -330,6 +317,7 @@ body {
   font-weight: 400;
 }
 
+/* Animations */
 .timano_anime {
   transform: translateY(-96px);
   width: 540px;
@@ -342,6 +330,7 @@ body {
   width: 140px;
 }
 
+/* Ladoshka animations */
 .ladoshka_timano_anime {
   position: absolute;
   width: 126px;
@@ -354,6 +343,7 @@ body {
 .ladoshka_baku_anime {
   position: absolute;
   width: 126px;
+
   top: 94%;
   left: 43%;
   z-index: 10;
