@@ -45,7 +45,7 @@
           :style="currentFlaskStyle"
           :animationData="require('@/assets/animation/flaskIndicator.json')"
           :loop="true"
-          :autoPlay="false"
+          :autoPlay="true"
       />
     </div>
   </div>
@@ -53,9 +53,7 @@
 
 <script>
 import {LottieAnimation} from "lottie-web-vue"
-
 import PlayVideo from "@/components/PlayVideo";
-import InactivityMixin from "@/mixins/InactivityMixin";
 import FlaskPageMixin from "@/mixins/FlaskPageMixin";
 import HomeButton from "@/components/HomeButton.vue";
 
@@ -64,7 +62,7 @@ export default {
     HomeButton, PlayVideo, LottieAnimation
   },
 
-  mixins: [InactivityMixin, FlaskPageMixin],
+  mixins: [FlaskPageMixin],
 
   data() {
     return {
@@ -77,11 +75,5 @@ export default {
   created() {
     this.initFlaskPage();
   },
-
-  mounted() {
-    this.blinkFlaskIndicator();
-  },
-
-  methods: {}
 };
 </script>

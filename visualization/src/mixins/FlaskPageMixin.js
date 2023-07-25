@@ -23,7 +23,6 @@ export default {
 
             // Misc vars
             currentVideoIdx: 0,
-            videoIsPlaying: false,
             currentFlaskIdx: 0,
             lastStepIdx: 0,  // the farthest step that was
             wasFinished: false,
@@ -45,9 +44,16 @@ export default {
             return getDevicesPropertyArray(this.deviceIds, 'position');
         },
 
+        currentFlaskPos() {
+            const position = this.flaskPositions[this.currentFlaskIdx];
+            return {x: position?.left, y: position?.top}
+        },
+
         // Determine a CSS style for current flask
-        currentFlaskStyle: function () {
-            if (this.currentFlaskIdx == null || this.currentFlaskIdx > this.totalFlaskCount - 1) {
+        currentFlaskStyle() {
+            const position = this.currentFlaskPos;
+
+            if (position.x === undefined || position.y === undefined) {
                 return {visibility: "hidden"};
             }
 
@@ -58,7 +64,8 @@ export default {
                 right: "0em",
                 transform: "translate(-50%, -50%)",
                 visibility: "visible",
-                ...this.flaskPositions[this.currentFlaskIdx] || {}
+                left: position.x,
+                top: position.y,
             }
         },
 
@@ -90,10 +97,6 @@ export default {
                 console.log("");
             }
         },
-
-        currentFlaskIdx() {
-            this.blinkFlaskIndicator();
-        },
     },
 
     unmounted() {
@@ -108,11 +111,6 @@ export default {
 
         exit() {
             this.$router.push({path: '/'});
-        },
-
-        blinkFlaskIndicator() {
-            this.$refs.flaskIndicator.stop();
-            this.$refs.flaskIndicator.play();
         },
 
         checkWarnings(currentSequence) {
@@ -131,7 +129,7 @@ export default {
         onFlaskUpdate(status) {
             if (this.wasFinished) {
                 // Don't allow to go back from final state,
-                // don't show warnings except for the one about cleaning the tableч
+                // don't show warnings except for the one about cleaning the table
                 return;
             }
 

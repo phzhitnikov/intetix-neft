@@ -44,8 +44,8 @@
           style="position:relative;"
           :style="currentFlaskStyle"
           :animationData="require('@/assets/animation/flaskIndicator.json')"
-          :loop="false"
-          :autoPlay="false"
+          :loop="true"
+          :autoPlay="true"
       />
     </div>
   </div>
@@ -76,9 +76,5 @@ export default {
   created() {
     this.initFlaskPage();
   },
-
-  mounted() {
-    this.blinkFlaskIndicator();
-  }
 };
 </script>
