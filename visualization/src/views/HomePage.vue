@@ -207,10 +207,6 @@ export default {
         case "Scene 3":
           this.$router.push({path: '/sibir'});
           break;
-
-        case "Exit":
-          this.exit();
-          break;
       }
     },
   },
