@@ -38,7 +38,9 @@
       </PlayVideo>
     </div>
 
-    <div class="flask_indicator_wrapper" style="z-index:1;" v-show="currentFlaskIdx >= 0">
+    <div class="flask_indicator_wrapper" style="z-index:1;"
+         v-show="currentFlaskIdx >= 0"
+    >
       <LottieAnimation
           ref="flaskIndicator"
           style="position:relative;"
@@ -70,10 +72,6 @@ export default {
       videoFolder: "timano",
       videos: ["12_0.mp4", "12.mp4", "13.mp4", "14.mp4", "15.mp4", "16.mp4"],
     };
-  },
-
-  created() {
-    this.initFlaskPage();
   },
 };
 </script>

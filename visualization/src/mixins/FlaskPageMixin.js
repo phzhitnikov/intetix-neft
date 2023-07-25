@@ -44,6 +44,7 @@ export default {
             return getDevicesPropertyArray(this.deviceIds, 'position');
         },
 
+        // Current flask x-y position
         currentFlaskPos() {
             const position = this.flaskPositions[this.currentFlaskIdx];
             return {x: position?.left, y: position?.top}
@@ -97,6 +98,10 @@ export default {
                 console.log("");
             }
         },
+    },
+
+    created() {
+        this.initFlaskPage();
     },
 
     unmounted() {

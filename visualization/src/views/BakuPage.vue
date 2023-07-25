@@ -71,9 +71,5 @@ export default {
       videos: ["1_0.mp4", "1.mp4", "2.mp4", "3.mp4", "4.mp4", "5.mp4", "6.mp4"],
     };
   },
-
-  created() {
-    this.initFlaskPage();
-  },
 };
 </script>
