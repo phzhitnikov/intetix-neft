@@ -137,7 +137,7 @@
 
 <script>
 import {LottieAnimation} from "lottie-web-vue"
-import {mapGetters, mapState} from "vuex";
+import {mapActions, mapGetters, mapState} from "vuex";
 
 import Ladoshka from '@/assets/animation/animasiya_ladoshka.json'
 
@@ -153,6 +153,8 @@ export default {
     };
   },
   mounted() {
+    this.resetButtonValue();
+
     // TODO: refactor this mess
     this.interval = 2
     setInterval(() => {
@@ -210,5 +212,9 @@ export default {
       }
     },
   },
+
+  methods: {
+    ...mapActions(['resetButtonValue'])
+  }
 };
 </script>

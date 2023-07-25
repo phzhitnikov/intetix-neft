@@ -83,6 +83,10 @@ const store = createStore({
     },
 
     actions: {
+        resetButtonValue(context) {
+            context.commit('setButtonValue', null);
+        },
+
         handleButtonPacket({commit}, {deviceId, data}) {
             let device = getDeviceById(deviceId);
             if (device === undefined) {
