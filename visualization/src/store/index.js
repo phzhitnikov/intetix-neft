@@ -58,7 +58,7 @@ const store = createStore({
         // - true - card is present, address is right
         // - false - card is present, but address is wrong
         // - null - no card present
-        deviceStatus: prepareDefaultDict(devices.filter(o => o.address), null),
+        deviceStatus: prepareDefaultDict(devices.filter(o => o.address), 'id', null),
         lastButtonValue: null,
     },
 

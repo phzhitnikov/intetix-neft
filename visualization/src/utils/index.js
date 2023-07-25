@@ -11,13 +11,18 @@ function findLastTruthyIdx(arr) {
     return lastTrueIdx
 }
 
-function prepareDefaultDict(dict, value) {
-    // { key1: {object}, key2: {object} }  —>  { key1: value, key2: value }
+function prepareDefaultDict(arr, keyName, defaultValue) {
+    // [{ <keyName>: v1, key2: v2}, { <keyName>: v1, key2: v2}]
+    // —>
+    // { keyName: <defaultValue>, key2: <defaultValue> }
 
-    return Object.keys(dict).reduce((acc, key) => {
-        acc[key] = value;
-        return acc;
-    }, {});
+    let result = {};
+    arr.forEach(v => {
+        let key = v[keyName];
+        result[key] = defaultValue;
+    })
+
+    return result;
 }
 
 function parsePacket(packet) {

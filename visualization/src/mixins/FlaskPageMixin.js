@@ -118,8 +118,12 @@ export default {
             const wrongFlasksCount = currentSequence.filter(o => o === false).length;
             this.showWrongFlaskWarning = wrongFlasksCount > 0;
 
-            // Check if previous sequence was ruined. Skip the tail of sequence
-            const misplacedPrevFlasks = currentSequence.slice(0, -1).filter(o => !o);  // get both false & null
+            // Check if previous sequence was ruined. Skip the currentFlaskId
+            const misplacedPrevFlasks = currentSequence
+                .slice(0, -1)  // skip last flask of opened sequence
+                .filter((o, idx) => idx !== this.currentFlaskIdx)  // skip current flask
+                .filter(o => !o) // get both false & null
+
             this.showRuinedSequenceWarning = misplacedPrevFlasks.length > 0
 
             console.log('wrongFlasksCount', wrongFlasksCount);
