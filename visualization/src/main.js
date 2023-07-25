@@ -27,7 +27,11 @@ socketClient.on("connect", () => {
 socketClient.on("button", (message) => {
     console.log('Received button data:', message)
 
-    const {deviceId, data} = parsePacket(message);
+    const parsed = parsePacket(message);
+    if (!parsed)
+        return;
+
+    const {deviceId, data} = parsed
     app.config.globalProperties.$store.dispatch('handleButtonPacket', {deviceId, data});
 });
 
@@ -36,7 +40,11 @@ socketClient.on("button", (message) => {
 socketClient.on("rfid", (message) => {
     console.log('Received RFID data:', message);
 
-    const {deviceId, data} = parsePacket(message);
+    const parsed = parsePacket(message);
+    if (!parsed)
+        return;
+
+    const {deviceId, data} = parsed
     app.config.globalProperties.$store.dispatch('handleDevicePacket', {deviceId, data});
 });
 

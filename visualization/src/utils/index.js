@@ -25,6 +25,7 @@ function parsePacket(packet) {
     // "Reader 1: C2 EF CB 2E"
     // "Reader 1: EMPTY"
     // "Button 0: Scene1"
+    // "Init rfid 5"
 
     let parsed_packet = packet.match(/(.*) (.*): (.*)/)
     if (parsed_packet == null) {
