@@ -43,7 +43,6 @@ export default {
 
       if (videoElement && videoElement instanceof HTMLVideoElement) {
         videoElement.play();
-        this.pauseOtherVideos(index);
       }
     },
 
