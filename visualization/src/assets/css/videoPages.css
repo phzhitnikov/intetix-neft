@@ -59,10 +59,7 @@
 .toggle .line3 {
   transform: rotateZ(-45deg) translateY(-256%);
 }
-/* toggle qushish kerak ushanda ichidahi line larni boshqarish mumkin  */
-/*  */
-/*  */
-/*     */
+
 /*============================= Video player=========================== */
 .video_wrapper {
   width: 2070px;
@@ -82,19 +79,26 @@
   transform: translate(-50%, -50%);
   border-radius: 10px;
 }
+
 /* ====================== Home page back icon =========================== */
 .home_icon_wrapper {
   position: absolute;
   bottom: 3.5%;
   left: 2.5%;
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   background-color: #e5e5eb;
-  padding: 11px 20px;
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.home_icon_wrapper svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .d-block {
@@ -104,7 +108,6 @@
 .d-none {
   display: none !important;
 }
-
 
 .flask_indicator_wrapper {
   width: 3840px;

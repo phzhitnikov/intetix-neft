@@ -2,8 +2,8 @@
   <router-link to="/">
     <div class="home_icon_wrapper">
       <svg
-          width="80"
-          height="80"
+          width="75"
+          height="75"
           viewBox="0 0 307 296"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
