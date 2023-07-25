@@ -10,6 +10,8 @@ if __name__ == '__main__':
     device_threads = [SerialDeviceThread(data, sio_server)
                       for data in DeviceCollector.get_devices()]
 
+    print(f'Collected {len(device_threads)} devices total')
+
 
     def start_all():
         for t in device_threads:

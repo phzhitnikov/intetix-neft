@@ -62,7 +62,6 @@ class DeviceCollector:
             print(line)
 
 
-
 class SerialDeviceThread(threading.Thread):
     MAX_CONNECTION_ATTEMPTS = 3
 
@@ -94,6 +93,8 @@ class SerialDeviceThread(threading.Thread):
         self.alive = False
         if hasattr(self.serial, 'cancel_read'):
             self.serial.cancel_read()
+
+        self.close()
         self.join(2)
 
     def on_data_received(self, data: str):
