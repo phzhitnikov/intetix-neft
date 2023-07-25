@@ -345,8 +345,9 @@ body {
 .ladoshka_timano_anime {
   position: absolute;
   width: 126px;
-  top: 109%;
-  left: 38%;
+
+  top: 97%;
+  left: 34%;
   z-index: 10;
 }
 
@@ -362,8 +363,8 @@ body {
   position: absolute;
   width: 126px;
 
-  top: 606px;
-  right: 30px;
+  top: 42%;
+  left: 83.5%;
   z-index: 20;
 }
 
