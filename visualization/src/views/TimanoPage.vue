@@ -33,8 +33,7 @@
     <div style="position:absolute; z-index:0;">
       <PlayVideo :videos="videos"
                  :selectedIndex="currentVideoIdx"
-                 :videoFolder="videoFolder"
-      >
+                 :videoFolder="videoFolder">
         <HomeButton/>
       </PlayVideo>
     </div>
