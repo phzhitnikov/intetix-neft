@@ -17,7 +17,7 @@ export default {
         // Implement this
         exitToMainPage() {},
 
-        resetInactivityTimer() {
+        resetInactivityTimers() {
             // Remove timers
             clearTimeout(this.inactivityWarningTimer);
             clearTimeout(this.inactivityExitTimer);
@@ -28,6 +28,10 @@ export default {
 
             // Hide warnings
             this.showInactivityWarning = false;
+        },
+
+        setInactivityTimers() {
+            this.resetInactivityTimers();
 
             // Prepare inactivity callbacks
             this.inactivityWarningTimer = setTimeout(() => {
@@ -35,6 +39,7 @@ export default {
             }, this.inactivityWarningTimeSec * 1000);
 
             this.inactivityExitTimer = setTimeout(() => {
+                console.log("Returning to main menu due to inactivity");
                 this.exitToMainPage();
             }, this.inactivityExitTimeSec * 1000);
         },

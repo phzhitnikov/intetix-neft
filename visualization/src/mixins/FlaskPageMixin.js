@@ -83,7 +83,7 @@ export default {
         devicesToWatch: {
             deep: true,
             handler: function (statuses) {
-                this.resetInactivityTimer();
+                this.setInactivityTimers();
                 this.onFlaskUpdate(Object.values(statuses));
 
                 console.log('after: currentFlaskIdx', this.currentFlaskIdx);
@@ -96,10 +96,14 @@ export default {
         },
     },
 
+    unmounted() {
+        this.resetInactivityTimers();
+    },
+
     methods: {
         initFlaskPage() {
             this.exitToMainPage = this.exit;
-            this.resetInactivityTimer();
+            this.setInactivityTimers();
         },
 
         exit() {
