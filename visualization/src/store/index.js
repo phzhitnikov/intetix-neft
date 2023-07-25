@@ -68,7 +68,7 @@ const store = createStore({
         },
 
         placedFlasksCount(state) {
-            return Object.values(state.deviceStatus).filter(o => o === true).length
+            return Object.values(state.deviceStatus).filter(o => o != null).length
         },
     },
 
