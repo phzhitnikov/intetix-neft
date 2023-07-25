@@ -16,7 +16,7 @@ Reader rfid(READER_ID, SS_PIN, RST_PIN);
 
 
 void setup() {
-    // Delay to prevent garbage data in Serial
+    // Delay to prevent garbage data in Serial (?)
     delay(1000);
 
     //  Serial interface to PC
@@ -24,7 +24,6 @@ void setup() {
 
     // Do nothing while Serial is initializing
     while (!Serial);
-
     delay(100);
 
     SPI.begin();
@@ -36,6 +35,5 @@ void setup() {
 
 void loop() {
     rfid.tick();
-
 }
 
