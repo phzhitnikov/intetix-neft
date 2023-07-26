@@ -4,7 +4,7 @@
       <!-- Проверьте расположение ранее установленных фигур и продолжайте путь -->
       <LottieAnimation
           ref="anim"
-          :animationData="require('@/assets/animation/checkFiguresAndProceed.json')"
+          :animationData=RuinedSequenceWarningAnimation
           :loop="true"
           :autoPlay="true"
       />
@@ -14,7 +14,7 @@
       <!-- Для продолжения переставьте фигуры и нажмите кнопку домой -->
       <LottieAnimation
           ref="anim"
-          :animationData="require('@/assets/animation/inactivityWarning.json')"
+          :animationData=InactivityWarningAnimation
           :loop="true"
           :autoPlay="true"
       />
@@ -24,7 +24,7 @@
       <!-- Неверно! -->
       <LottieAnimation
           ref="anim"
-          :animationData="require('@/assets/animation/wrong.json')"
+          :animationData=WrongFlaskWarningAnimation
           :loop="true"
           :autoPlay="true"
       />
@@ -45,7 +45,7 @@
           ref="flaskIndicator"
           style="position:relative;"
           :style="currentFlaskStyle"
-          :animationData="require('@/assets/animation/flaskIndicator.json')"
+          :animationData=FlaskIndicatorAnimation
           :loop="true"
           :autoPlay="true"
       />

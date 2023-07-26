@@ -5,6 +5,11 @@ import InactivityMixin from "@/mixins/InactivityMixin";
 import {getDevicesPropertyArray} from "@/store";
 import {findLastTruthyIdx} from "@/utils";
 
+import RuinedSequenceWarningAnimation from "@/assets/animation/checkFiguresAndProceed.json";
+import InactivityWarningAnimation from '@/assets/animation/inactivityWarning.json';
+import WrongFlaskWarningAnimation from '@/assets/animation/wrong.json';
+import FlaskIndicatorAnimation from '@/assets/animation/flaskIndicator.json';
+
 export default {
     data() {
         return {
@@ -20,6 +25,12 @@ export default {
             // Warnings
             showRuinedSequenceWarning: false,
             showWrongFlaskWarning: false,
+
+            // Animations
+            RuinedSequenceWarningAnimation,
+            InactivityWarningAnimation,
+            WrongFlaskWarningAnimation,
+            FlaskIndicatorAnimation,
 
             // Misc vars
             currentVideoIdx: 0,

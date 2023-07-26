@@ -63,11 +63,6 @@
               :loop="true"
               :autoPlay="true"
           />
-          <!-- <img
-          :src="require('../assets/images/zapladnaya_sibir.svg')"
-          alt="rink"
-          class="rink-l"
-        /> -->
         </div>
         <router-link class="btn" to="/sibir">
           ЗАПАДНАЯ СИБИРЬ - МОСКВА <br/>

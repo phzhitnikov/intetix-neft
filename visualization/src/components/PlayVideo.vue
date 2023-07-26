@@ -1,7 +1,5 @@
 <template>
-  <div
-      class="video_wrapper d-block"
-  >
+  <div class="video_wrapper d-block">
     <video
         v-for="(item, i) of videos"
         :key="i"
