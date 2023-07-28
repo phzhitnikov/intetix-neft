@@ -32,6 +32,11 @@ export default {
             WrongFlaskWarningAnimation,
             FlaskIndicatorAnimation,
 
+            // Timers
+            // Exit to the main menu after N seconds
+            finalExitTimeSec: 10,
+            finalExitTimer: null,
+
             // Misc vars
             currentVideoIdx: 0,
             currentFlaskIdx: 0,
@@ -109,6 +114,12 @@ export default {
                 console.log("");
             }
         },
+
+        wasFinished(value) {
+            if (value) {
+                this.setFinalTimer();
+            }
+        }
     },
 
     created() {
@@ -117,6 +128,7 @@ export default {
 
     unmounted() {
         this.resetInactivityTimers();
+        this.resetFinalTimer();
     },
 
     methods: {
@@ -127,6 +139,17 @@ export default {
 
         exit() {
             this.$router.push({path: '/'});
+        },
+
+        setFinalTimer() {
+            this.finalExitTimer = setTimeout(() => {
+                this.exit();
+            }, this.finalExitTimeSec * 1000);
+        },
+
+        resetFinalTimer() {
+            clearTimeout(this.finalExitTimer)
+            this.finalExitTimer = null;
         },
 
         checkWarnings(currentSequence) {

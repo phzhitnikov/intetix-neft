@@ -69,6 +69,7 @@ export default {
       deviceIds: [1, 2, 3, 4, 5, 6],
       videoFolder: "baku",
       videos: ["1_0.mp4", "1.mp4", "2.mp4", "3.mp4", "4.mp4", "5.mp4", "6.mp4"],
+      finalExitTimeSec: 26 + 3,
     };
   },
 };

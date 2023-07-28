@@ -71,6 +71,7 @@ export default {
       deviceIds: [12, 13, 14, 15, 16],
       videoFolder: "timano",
       videos: ["12_0.mp4", "12.mp4", "13.mp4", "14.mp4", "15.mp4", "16.mp4"],
+      finalExitTimeSec: 32 + 3,
     };
   },
 };
