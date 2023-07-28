@@ -11,11 +11,11 @@ const devices = [
     {'id': '0'},  // button device
 
     // Timano
-    {'id': '12', 'address': '71 CB F8 26', 'position': {left: "2506px", top: "743px"}},
-    {'id': '13', 'address': '30 31 E1 1A', 'position': {left: "2461px", top: "502px"}},
-    {'id': '14', 'address': '51 6E 73 26', 'position': {left: "1991px", top: "548px"}},
-    {'id': '15', 'address': '95 B5 A8 AC', 'position': {left: "1456px", top: "511px"}},
-    {'id': '16', 'address': '12 20 12 1A', 'position': {left: "1125px", top: "941px"}},
+    {'id': '12', 'address': '71 CB F8 26', 'position': {left: "2556px", top: "713px"}},
+    {'id': '13', 'address': '30 31 E1 1A', 'position': {left: "2475px", top: "470px"}},
+    {'id': '14', 'address': '51 6E 73 26', 'position': {left: "2010px", top: "538px"}},
+    {'id': '15', 'address': '95 B5 A8 AC', 'position': {left: "1456px", top: "491px"}},
+    {'id': '16', 'address': '12 20 12 1A', 'position': {left: "1135px", top: "921px"}},
 
     // Sibir
     {'id': '7',  'address': '50 5B 85 1A', 'position': {left: "2568px", top: "325px"}},
