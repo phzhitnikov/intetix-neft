@@ -44,5 +44,11 @@ function parsePacket(packet) {
     return {deviceId, data}
 }
 
+const Warning = {
+    Inactivity: 'inactivity',
+    WrongFlask: 'wrongFlask',
+    RuinedSequence: 'ruinedSequence',
+}
 
-export {findLastTruthyIdx, prepareDefaultDict, parsePacket}
+
+export {findLastTruthyIdx, prepareDefaultDict, parsePacket, Warning}

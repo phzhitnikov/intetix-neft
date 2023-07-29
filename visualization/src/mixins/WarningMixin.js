@@ -1,6 +1,11 @@
+import {Warning} from "@/utils";
+
 export default {
     data() {
         return {
+            flaskWarning: null,
+            showInactivityWarning: false,
+
             // Show warning after N seconds of inactivity
             inactivityWarningTimeSec: 2 * 60,
             inactivityWarningTimer: null,
@@ -8,13 +13,20 @@ export default {
             // Exit to main page after N seconds of inactivity
             inactivityExitTimeSec: 5 * 60,
             inactivityExitTimer: null,
+        }
+    },
 
-            showInactivityWarning: false,
-        };
+    computed: {
+        priorityWarning() {
+            if (this.showInactivityWarning)
+                return Warning.Inactivity;
+
+            return this.flaskWarning;
+        },
     },
 
     methods: {
-        // Implement this
+        // Override this
         exitToMainPage() {},
 
         resetInactivityTimers() {
@@ -43,5 +55,5 @@ export default {
                 this.exitToMainPage();
             }, this.inactivityExitTimeSec * 1000);
         },
-    },
+    }
 }

@@ -1,14 +1,11 @@
 import _ from "lodash";
 import {mapState} from "vuex";
 
-import InactivityMixin from "@/mixins/InactivityMixin";
 import {getDevicesPropertyArray} from "@/store";
-import {findLastTruthyIdx} from "@/utils";
+import {findLastTruthyIdx, Warning} from "@/utils";
 
-import RuinedSequenceWarningAnimation from "@/assets/animation/checkFiguresAndProceed.json";
-import InactivityWarningAnimation from '@/assets/animation/inactivityWarning.json';
-import WrongFlaskWarningAnimation from '@/assets/animation/wrong.json';
 import FlaskIndicatorAnimation from '@/assets/animation/flaskIndicator.json';
+import WarningMixin from "@/mixins/WarningMixin";
 
 export default {
     data() {
@@ -22,14 +19,7 @@ export default {
             // Sequence of videos to use
             videos: [],
 
-            // Warnings
-            showRuinedSequenceWarning: false,
-            showWrongFlaskWarning: false,
-
             // Animations
-            RuinedSequenceWarningAnimation,
-            InactivityWarningAnimation,
-            WrongFlaskWarningAnimation,
             FlaskIndicatorAnimation,
 
             // Timers
@@ -38,6 +28,7 @@ export default {
             finalExitTimer: null,
 
             // Misc vars
+            currentSequence: [],
             currentVideoIdx: 0,
             currentFlaskIdx: 0,
             lastStepIdx: 0,  // the farthest step that was
@@ -45,7 +36,7 @@ export default {
         };
     },
 
-    mixins: [InactivityMixin],
+    mixins: [WarningMixin],
 
     computed: {
         ...mapState(['lastButtonValue', 'deviceStatus']),
@@ -86,8 +77,20 @@ export default {
             }
         },
 
-        hasWarnings() {
-            return this.showRuinedSequenceWarning || this.showWrongFlaskWarning;
+        // Place warnings depending on current flask position (at the top or bottom of screen)
+        warningStyle() {
+            const defaultStyle = {transform: "translateY(0%)"};
+            if (this.currentFlaskPos.y === undefined) {
+                return defaultStyle;
+            }
+
+            // string "100px" -> number 100
+            const flaskYPos = parseInt(this.currentFlaskPos.y, 10);
+            const middleOfViewport = window.innerHeight / 2;
+
+            return flaskYPos > middleOfViewport
+                ? defaultStyle
+                : {transform: "translateY(100%)"};
         },
 
         totalFlaskCount: function () {
@@ -152,21 +155,26 @@ export default {
             this.finalExitTimer = null;
         },
 
-        checkWarnings(currentSequence) {
-            // Check for wrong flasks ('false' values)
-            const wrongFlasksCount = currentSequence.filter(o => o === false).length;
-            this.showWrongFlaskWarning = wrongFlasksCount > 0;
+        checkWarnings() {
+            let newWarning = null;
 
             // Check if previous sequence was ruined. Skip the currentFlaskId
-            const misplacedPrevFlasks = currentSequence
+            const misplacedPrevFlasks = this.currentSequence
                 .slice(0, -1)  // skip last flask of opened sequence
-                .filter((o, idx) => idx !== this.currentFlaskIdx)  // skip current flask
                 .filter(o => !o) // get both false & null
 
-            this.showRuinedSequenceWarning = misplacedPrevFlasks.length > 0
+            if (misplacedPrevFlasks.length > 0)
+                newWarning = Warning.RuinedSequence;
+
+            // Check for wrong flasks ('false' values)
+            const wrongFlasksCount = this.currentSequence.filter(o => o === false).length;
+            if (wrongFlasksCount > 0)
+                newWarning = Warning.WrongFlask;
 
             console.log('wrongFlasksCount', wrongFlasksCount);
             console.log('misplacedPrevFlasks', misplacedPrevFlasks);
+
+            this.flaskWarning = newWarning;
         },
 
         onFlaskUpdate(status) {
@@ -177,10 +185,10 @@ export default {
             }
 
             // Ignore all the future flasks (after currentFlaskIdx)
-            const currentSequence = status.slice(0, this.lastStepIdx + 1);
+            this.currentSequence = status.slice(0, this.lastStepIdx + 1);
 
-            this.checkWarnings(currentSequence);
-            console.log('currentSequence', currentSequence);
+            this.checkWarnings();
+            console.log('currentSequence', this.currentSequence);
 
             const lastTrueIdx = findLastTruthyIdx(status);
             console.log('before: currentFlaskIdx', this.currentFlaskIdx, 'lastTrueIdx', lastTrueIdx);
@@ -192,7 +200,7 @@ export default {
 
             this.currentFlaskIdx = lastTrueIdx + 1;
 
-            if (this.hasWarnings)
+            if (this.flaskWarning != null)
                 return;
 
             // Proceed to next video and save the tail of sequence
