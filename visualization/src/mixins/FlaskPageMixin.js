@@ -158,7 +158,7 @@ export default {
         checkWarnings() {
             let newWarning = null;
 
-            // Check if previous sequence was ruined. Skip the currentFlaskId
+            // Check if previous sequence was ruined
             const misplacedPrevFlasks = this.currentSequence
                 .slice(0, -1)  // skip last flask of opened sequence
                 .filter(o => !o) // get both false & null

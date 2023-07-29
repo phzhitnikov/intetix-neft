@@ -11,7 +11,8 @@
       </PlayVideo>
     </div>
 
-    <div class="flask_indicator_wrapper" style="z-index:1;" v-show="currentFlaskIdx >= 0">
+    <div class="flask_indicator_wrapper" style="z-index:1;"
+         v-show="currentFlaskIdx >= 0">
       <LottieAnimation
           ref="flaskIndicator"
           style="position:relative;"
