@@ -63,7 +63,7 @@ export default {
         // Current flask x-y position
         currentFlaskPos() {
             const position = this.flaskPositions[this.currentFlaskIdx];
-            return {x: position?.left, y: position?.top}
+            return {x: position?.x, y: position?.y}
         },
 
         // Determine a CSS style for current flask
@@ -115,10 +115,10 @@ export default {
             }
         },
 
+        // Set timer to exit to the main menu after N seconds
         wasFinished(value) {
-            if (value) {
+            if (value)
                 this.setFinalTimer();
-            }
         }
     },
 
