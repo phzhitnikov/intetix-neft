@@ -1,3 +1,3 @@
 @echo off
 
-start chrome "http://localhost:3000" && npx serve dist
+start chrome --start-fullscreen "http://localhost:3000" && npx serve dist
