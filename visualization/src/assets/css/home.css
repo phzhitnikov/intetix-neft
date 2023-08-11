@@ -93,6 +93,13 @@ body {
   font-weight: 700;
 }
 
+.kv .circle .hand {
+  display: inline;
+  width: 50px;
+  margin-left: 15px;
+  vertical-align: bottom;
+}
+
 /* Right Sibir */
 .kv .right {
   background: url("@/assets/images/karta_fon.png");

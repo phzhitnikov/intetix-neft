@@ -117,7 +117,8 @@
         КАК ПРОЛЕГАЛ ПУТЬ <br/>
         НЕФТИ В РАЗНЫЕ ЭПОХИ?
       </h3>
-      <p>Чтобы узнать, выберите маршрут и коснитесь его названия</p>
+      <p>Чтобы узнать больше, выберите маршрут и <span style="color: #a90028;">прикоснитесь ладонью</span> к анимации<img class="hand" :src="HandIcon"/></p>
+
     </span>
   </div>
 </template>
@@ -127,6 +128,7 @@ import {LottieAnimation} from "lottie-web-vue"
 import {mapActions, mapGetters, mapState} from "vuex";
 
 import Ladoshka from '@/assets/animation/animasiya_ladoshka.json'
+import HandIcon from '@/assets/images/hand.svg'
 
 export default {
   name: "HomePage",
@@ -138,6 +140,7 @@ export default {
       interval: 2,
       animSwitchTimer: null,
       Ladoshka,
+      HandIcon
     };
   },
   mounted() {
