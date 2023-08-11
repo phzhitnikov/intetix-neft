@@ -68,6 +68,7 @@
   display: none;
   border-radius: 79px;
   overflow: hidden;
+  margin-left: 1.8px;
 }
 .video {
   width: 3840px;

@@ -12,7 +12,7 @@
 }
 
 body {
-  overflow-y: hidden;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,14 +35,12 @@ body {
 }
 
 /* Hover effect section */
-
 .kv .top:hover, .left:hover, .right:hover, .bottom:hover {
   filter: none;
   -webkit-filter: none;
 }
 
 /* Circle  */
-
 .kv .circle {
   position: absolute;
   width: 796px;
@@ -123,18 +121,6 @@ body {
   left: 2%;
 }
 
-.kv .left .box-l {
-  position: absolute;
-  top: 42%;
-  right: 2%;
-}
-
-.kv .bottom .box-b {
-  position: absolute;
-  bottom: 5.5%;
-  left: 35%;
-}
-
 .kv .right .btn {
   width: 581px;
   height: 136px;
@@ -150,6 +136,11 @@ body {
   border-radius: 20px;
   color: white;
   background: #383838d7;
+}
+
+.kv .home_animation {
+  filter: brightness(100%);
+  -webkit-filter: brightness(100%);
 }
 
 .kv .home_animation .btn {
@@ -188,6 +179,12 @@ body {
   -moz-border-radius: 50px;
   -ms-border-radius: 50px;
   -o-border-radius: 50px;
+}
+
+.kv .left .box-l {
+  position: absolute;
+  top: 42%;
+  right: 2%;
 }
 
 .kv .left .btn {
@@ -252,9 +249,9 @@ body {
   -o-transition: 0.7s ease-in;
 }
 
-.kv .home_animation {
-  filter: brightness(100%);
-  -webkit-filter: brightness(100%);
+.kv .bottom .box-b {
+  position: absolute;
+  bottom: 8.5%;
 }
 
 .kv .bottom .box-b .btn {
@@ -284,8 +281,8 @@ body {
 }
 
 .baku_anime {
-  transform: translateY(43px);
-  width: 540px;
+  transform: translateY(64.5px);
+  width: 480px;
 }
 
 .sibir_anime {
@@ -301,14 +298,14 @@ body {
 
 .ladoshka_timano_anime {
   position: absolute;
-  top: 97%;
+  top: 90%;
   left: 34%;
 }
 
 .ladoshka_baku_anime {
   position: absolute;
-  top: 94%;
-  left: 43%;
+  top: 90%;
+  left: 38%;
 }
 
 .ladoshka_sibir_anime {
