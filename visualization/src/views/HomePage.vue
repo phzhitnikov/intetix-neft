@@ -10,43 +10,37 @@
       />
     </div>
 
-    <div class="right_wrapper"></div>
     <!-- Timano -->
     <router-link
         to="/timano"
         class="right"
         :class="interval == 3 ? 'home_animation' : ''"
     >
-      <router-link to="/timano">
-        <div class="box-r">
-          <div class="timano_anime">
-            <LottieAnimation
-                ref="anim"
-                :animationData="require('@/assets/animation/icon03.json')"
-                :loop="true"
-                :autoPlay="true"
-            />
-          </div>
-
-          <router-link class="btn" to="/timano">
-            ТИМАНО-ПЕЧОРА <br/>
-            МИРОВЫЕ РЫНКИ <span>(XXI век)</span>
-          </router-link>
-          <div
-              class="ladoshka_timano_anime"
-              :class="interval == 3 ? 'home_animation' : ''"
-          >
-            <LottieAnimation
-                ref="anim-lad1"
-                :animationData="Ladoshka"
-                :loop="true"
-                :autoPlay="false"
-                class="ladoshka"
-            />
-          </div>
+      <div class="box-r box-wrapper">
+        <div class="timano_anime">
+          <LottieAnimation
+              ref="anim"
+              :animationData="require('@/assets/animation/icon03.json')"
+              :loop="true"
+              :autoPlay="true"
+          />
         </div>
-      </router-link>
+
+        <div class="btn">
+          ТИМАНО-ПЕЧОРА <br/>
+          МИРОВЫЕ РЫНКИ <span>(XXI век)</span>
+        </div>
+
+        <LottieAnimation
+            class="ladoshka ladoshka_timano_anime"
+            ref="anim-lad1"
+            :animationData="Ladoshka"
+            :loop="true"
+            :autoPlay="true"
+        />
+      </div>
     </router-link>
+
     <div class="top"></div>
 
     <!-- Sibir -->
@@ -55,8 +49,8 @@
         class="left"
         :class="interval == 1 ? 'home_animation' : ''"
     >
-      <router-link to="/sibir" class="box-l">
-        <div class="rink-l">
+      <div class="box-l box-wrapper">
+        <div class="sibir_anime">
           <LottieAnimation
               ref="anim"
               :animationData="require('@/assets/animation/icon02.json')"
@@ -64,20 +58,20 @@
               :autoPlay="true"
           />
         </div>
-        <router-link class="btn" to="/sibir">
+
+        <div class="btn">
           ЗАПАДНАЯ СИБИРЬ - МОСКВА <br/>
           <span>(вторая половина XX века)</span>
-        </router-link>
-        <div class="ladoshka_sibir_anime">
-          <LottieAnimation
-              ref="anim-lad2"
-              :animationData="Ladoshka"
-              :loop="true"
-              :autoPlay="false"
-              class="ladoshka"
-          />
         </div>
-      </router-link>
+
+        <LottieAnimation
+            class="ladoshka ladoshka_sibir_anime"
+            ref="anim-lad2"
+            :animationData="Ladoshka"
+            :loop="true"
+            :autoPlay="true"
+        />
+      </div>
     </router-link>
 
     <!-- Baku -->
@@ -86,7 +80,7 @@
         class="bottom"
         :class="interval == 2 ? 'home_animation' : ''"
     >
-      <router-link to="/baku" class="b-box">
+      <div class="box-b box-wrapper">
         <div class="baku_anime">
           <LottieAnimation
               ref="anim"
@@ -95,21 +89,20 @@
               :autoPlay="true"
           />
         </div>
-        <router-link class="btn" to="/baku">
+
+        <div class="btn">
           БАКУ - САНКТ-ПЕТЕРБУРГ <br/>
           <span> (конец XIX века - начало XX века)</span>
-        </router-link>
-        <div class="ladoshka_baku_anime">
-          <LottieAnimation
-              ref="anim-lad3"
-              :animationData="Ladoshka"
-              :loop="true"
-              :autoPlay="true"
-              class="ladoshka"
-          />
-
         </div>
-      </router-link>
+
+        <LottieAnimation
+            class="ladoshka ladoshka_baku_anime"
+            ref="anim-lad3"
+            :animationData="Ladoshka"
+            :loop="true"
+            :autoPlay="true"
+        />
+      </div>
     </router-link>
 
     <span class="circle">
@@ -117,7 +110,9 @@
         КАК ПРОЛЕГАЛ ПУТЬ <br/>
         НЕФТИ В РАЗНЫЕ ЭПОХИ?
       </h3>
-      <p>Чтобы узнать больше, выберите маршрут и <span style="color: #a90028;">прикоснитесь ладонью</span> к анимации<img class="hand" :src="HandIcon"/></p>
+      <p>Чтобы узнать больше, выберите маршрут и <span style="color: #a90028;">прикоснитесь ладонью</span> к анимации
+        <img class="hand" :src="HandIcon"/>
+      </p>
 
     </span>
   </div>
@@ -147,25 +142,8 @@ export default {
     this.resetButtonValue();
 
     this.animSwitchTimer = setInterval(() => {
-      switch (this.interval) {
-        case 0:
-          this.$refs["anim-lad1"].stop();
-          this.$refs["anim-lad2"].play();
-          break;
-
-        case 1:
-          this.$refs["anim-lad2"].stop();
-          this.$refs["anim-lad3"].play();
-          break;
-
-        case 2:
-          this.$refs["anim-lad3"].stop();
-          this.$refs["anim-lad1"].play();
-          break;
-
-        case 3:
-          this.interval = 0;
-      }
+      if (this.interval === 3)
+        this.interval = 0;
 
       this.interval++;
     }, 3600);
