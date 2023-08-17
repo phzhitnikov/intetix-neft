@@ -1,13 +1,8 @@
 <template>
   <div class="kv">
     <div class="anim-warning" style="position:absolute; z-index:2;" v-show="showFlasksLeftWarning">
-      <!-- Расставьте колбы в ниши и выберите маршрут -->
-      <LottieAnimation
-          ref="anim"
-          :animationData="require('@/assets/animation/howToStart.json')"
-          :loop="true"
-          :autoPlay="true"
-      />
+      <!-- Для выбора нового маршрута необходимо убрать колбы -->
+      <img style="width: 1418px; height: 709px;" :src="require('@/assets/images/flasksLeftWarning.svg')"/>
     </div>
 
     <!-- Timano -->
