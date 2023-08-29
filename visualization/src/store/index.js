@@ -14,7 +14,7 @@ const devices = [
     {'id': '12', 'address': '71 CB F8 26', 'position': {x: "2556px", y: "723px"}},
     {'id': '13', 'address': '30 31 E1 1A', 'position': {x: "2495px", y: "450px"}},
     {'id': '14', 'address': '51 6E 73 26', 'position': {x: "1990px", y: "538px"}},
-    {'id': '15', 'address': '95 B5 A8 AC', 'position': {x: "1480px", y: "491px"}},
+    {'id': '15', 'address': '74 C9 74 74', 'position': {x: "1480px", y: "491px"}},
     {'id': '16', 'address': '12 20 12 1A', 'position': {x: "1135px", y: "921px"}},
 
     // Sibir
