@@ -31,6 +31,7 @@ import PlayVideo from "@/components/PlayVideo";
 import FlaskPageMixin from "@/mixins/FlaskPageMixin";
 import HomeButton from "@/components/HomeButton.vue";
 import WarningBlock from "@/components/WarningBlock.vue";
+import FlaskIndicatorAnimation from '@/assets/animation/flaskRed.json';
 
 export default {
   components: {
@@ -41,6 +42,7 @@ export default {
 
   data() {
     return {
+      FlaskIndicatorAnimation,
       deviceIds: [12, 13, 14, 15, 16],
       videoFolder: "timano",
       videos: ["12_0.mp4", "12.mp4", "13.mp4", "14.mp4", "15.mp4", "16.mp4"],

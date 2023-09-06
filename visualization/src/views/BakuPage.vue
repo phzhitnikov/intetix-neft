@@ -32,6 +32,7 @@ import PlayVideo from "@/components/PlayVideo";
 import FlaskPageMixin from "@/mixins/FlaskPageMixin";
 import HomeButton from "@/components/HomeButton.vue";
 import WarningBlock from "@/components/WarningBlock.vue";
+import FlaskIndicatorAnimation from '@/assets/animation/flaskYellow.json';
 
 export default {
   components: {
@@ -42,6 +43,7 @@ export default {
 
   data() {
     return {
+      FlaskIndicatorAnimation,
       deviceIds: [1, 2, 3, 4, 5, 6],
       videoFolder: "baku",
       videos: ["1_0.mp4", "1.mp4", "2.mp4", "3.mp4", "4.mp4", "5.mp4", "6.mp4"],

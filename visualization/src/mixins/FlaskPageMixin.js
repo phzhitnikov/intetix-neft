@@ -4,7 +4,6 @@ import {mapState} from "vuex";
 import {getDevicesPropertyArray} from "@/store";
 import {findLastTruthyIdx, Warning} from "@/utils";
 
-import FlaskIndicatorAnimation from '@/assets/animation/flaskIndicator.json';
 import WarningMixin from "@/mixins/WarningMixin";
 
 export default {
@@ -18,9 +17,6 @@ export default {
 
             // Sequence of videos to use
             videos: [],
-
-            // Animations
-            FlaskIndicatorAnimation,
 
             // Timers
             // Exit to the main menu after N seconds
@@ -207,7 +203,7 @@ export default {
             this.currentVideoIdx = this.currentFlaskIdx;
             this.lastStepIdx = this.currentVideoIdx;
 
-            // If all flasks are placed, hide flask indicator & mark page finished
+            // If all flasks are placed, hide flask indicator & mark page as finished
             if (lastTrueIdx >= this.totalFlaskCount - 1) {
                 this.currentFlaskIdx = null;
                 this.wasFinished = true;
