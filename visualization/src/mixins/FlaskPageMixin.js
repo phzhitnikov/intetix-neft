@@ -27,7 +27,7 @@ export default {
             currentSequence: [],
             currentVideoIdx: 0,
             currentFlaskIdx: 0,
-            lastStepIdx: 0,  // the farthest step that was
+            lastStepIdx: 0,  // the farthest step that was set
             wasFinished: false,
         };
     },

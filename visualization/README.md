@@ -1,41 +1,23 @@
-# video_vue3
+# Overview
 
-## Чекбоксы можно посмотреть вот здесь:
+1) WebSocket-сервер (ретранслятор из серийного порта) подключается к визуализации к порту 5001 и передает пакеты 
+от устройств (контроллеров считывателей и кнопок)
+> Пакеты событий приходят в момент создания события и не повторяются
 
-http://localhost:8080/#/checkbox
-
-## nvm use используем 16 версию
-
+2) Виды пакетов, которые обрабатывает визуализация:
+  - инициализация - устройство называет свой тип и адрес
+    ```
+        Формат: Init <тип устройства> <адрес>
+    
+        Init rfid 1  — считыватель с адресом 1
+        Init button 5  — контроллер кнопок с адресом 5
+    ```
+  - событие - приложили карточку к считывателю или нажали кнопку
 ```
-nvm use 16
-```
+    Формат: Init <тип устройства> <адрес>
 
-## Project setup
-
-```
-yarn
-```
-
-### Compiles and hot-reloads for development
-
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-
-```
-yarn build
+    Reader 1: C2 EF CB 2E  — к считывателю с адресом 1 приложили карточку C2 EF CB 2E
+    Reader 1: EMPTY  — от считывателя с адресом 1 убрали карточку
+    Button 0: Scene1  — на контроллере кнопок с адресом 0 нажали кнопку с действием Scene1
 ```
 
-### Lints and fixes files
-
-```
-yarn lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-1. Bosh sahifaga animatsiyani quyish kerak
