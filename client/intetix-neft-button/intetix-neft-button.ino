@@ -1,3 +1,5 @@
+#include <Timer.h>
+
 #include "Button.h"
 
 #define DEVICE_ID 0
@@ -20,6 +22,9 @@ Button *buttons[BUTTONS_COUNT]{
         &homeButton2,
         &homeButton3,
 };
+
+#define PING_PERIOD_MS 5000
+Timer pingTimer;
 
 
 String get_button_tag(const uint8_t id) {
@@ -60,6 +65,12 @@ void setup() {
     for (auto &button: buttons) {
         button->init();
     }
+
+    // Init ping timer
+    pingTimer.setInterval(PING_PERIOD_MS);
+    pingTimer.setCallback([] {
+        Serial.println("ping");
+    });
 }
 
 void loop() {
@@ -73,4 +84,6 @@ void loop() {
             Serial.println(get_button_tag(i));
         }
     }
+
+    pingTimer.update();
 }

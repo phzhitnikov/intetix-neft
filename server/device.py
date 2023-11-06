@@ -1,6 +1,7 @@
 import threading
 from concurrent.futures import as_completed, ThreadPoolExecutor
 from dataclasses import dataclass
+import time
 from time import sleep
 
 import serial
@@ -60,6 +61,7 @@ class DeviceCollector:
 
 class SerialDeviceThread(threading.Thread):
     MAX_CONNECTION_ATTEMPTS = 3
+    MAX_IDLE_SEC_BEFORE_RESET = 30
 
     def __init__(self, device_data: DeviceData, server: SocketIOServer):
         super(SerialDeviceThread, self).__init__()
@@ -70,6 +72,7 @@ class SerialDeviceThread(threading.Thread):
         self.device_data = device_data
         self.alive = True
         self._write_lock = threading.Lock()
+        self.last_data_time = time.time()
 
         self.connect()
 
@@ -94,8 +97,10 @@ class SerialDeviceThread(threading.Thread):
         self.join(2)
 
     def on_data_received(self, data: str):
+        self.last_data_time = time.time()
         self._log(data)
-        self.server.send_data(self.device_data.type, data)
+        if data != 'ping':
+            self.server.send_data(self.device_data.type, data)
 
     def on_error(self, exc: Exception):
         self._log(f'Got exception: {str(exc)}')
@@ -109,6 +114,8 @@ class SerialDeviceThread(threading.Thread):
             try:
                 # Read all that is there or wait for one byte (blocking)
                 data = read_line(self.serial)
+                print(f'Trying to read data on {self.device_data.port}...')
+                # TODO: check last_data_time
             except serial.SerialException as e:
                 # Probably some I/O problem such as disconnected USB serial
                 self.on_error(e)
