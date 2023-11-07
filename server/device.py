@@ -102,9 +102,6 @@ class SerialDeviceThread(threading.Thread):
         if data != 'ping':
             self.server.send_data(self.device_data.type, data)
 
-    def on_error(self, exc: Exception):
-        self._log(f'Got exception: {str(exc)}')
-
     def run(self):
         if not hasattr(self.serial, 'cancel_read'):
             self.serial.timeout = 3
@@ -114,11 +111,15 @@ class SerialDeviceThread(threading.Thread):
             try:
                 # Read all that is there or wait for one byte (blocking)
                 data = read_line(self.serial)
-                print(f'Trying to read data on {self.device_data.port}...')
-                # TODO: check last_data_time
+
+                # Watchdog
+                if time.time() - self.last_data_time > self.MAX_IDLE_SEC_BEFORE_RESET:
+                    self._log(f"No data for {self.MAX_IDLE_SEC_BEFORE_RESET} seconds, reconnecting")
+                    self.close()
+                    self.connect()
             except serial.SerialException as e:
                 # Probably some I/O problem such as disconnected USB serial
-                self.on_error(e)
+                self._log(f'Got SerialException: {str(e)}')
 
                 # Try to reconnect
                 if not self.connect():
@@ -128,7 +129,7 @@ class SerialDeviceThread(threading.Thread):
                     try:
                         self.on_data_received(data)
                     except Exception as e:
-                        self.on_error(e)
+                        self._log(f'Got exception while retransmitting data: {str(e)}')
                         break
 
         self.alive = False
