@@ -98,8 +98,8 @@ class SerialDeviceThread(threading.Thread):
 
     def on_data_received(self, data: str):
         self.last_data_time = time.time()
-        self._log(data)
         if data != 'ping':
+            self._log(data)
             self.server.send_data(self.device_data.type, data)
 
     def run(self):
@@ -114,9 +114,9 @@ class SerialDeviceThread(threading.Thread):
 
                 # Watchdog
                 if time.time() - self.last_data_time > self.MAX_IDLE_SEC_BEFORE_RESET:
-                    self._log(f"No data for {self.MAX_IDLE_SEC_BEFORE_RESET} seconds, reconnecting")
-                    self.close()
-                    self.connect()
+                    self._log(f"No data for {self.MAX_IDLE_SEC_BEFORE_RESET} seconds")
+                    # self.close()
+                    # self.connect()
             except serial.SerialException as e:
                 # Probably some I/O problem such as disconnected USB serial
                 self._log(f'Got SerialException: {str(e)}')
