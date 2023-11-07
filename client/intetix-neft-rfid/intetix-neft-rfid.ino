@@ -2,7 +2,6 @@
 
 #include <SPI.h>
 #include <MFRC522.h>
-#include <Timer.h>
 
 #include "Reader.h"
 
@@ -14,7 +13,7 @@
 
 #define PING_PERIOD_MS 5000
 
-Timer pingTimer;
+unsigned long pingTimer = 0;
 Reader rfid(READER_ID, SS_PIN, RST_PIN);
 
 
@@ -33,18 +32,15 @@ void setup() {
 
     // Init the reader and present itself to the PC server
     rfid.init();
-
-    // Init ping timer
-    pingTimer.setInterval(PING_PERIOD_MS);
-    pingTimer.setCallback([] {
-        Serial.println("ping");
-    });
 }
 
 
 void loop() {
     rfid.tick();
 
-    pingTimer.update();
+    if (millis() - pingTimer > PING_PERIOD_MS) {
+        Serial.println("ping");
+        pingTimer = millis();
+    }
 }
 
