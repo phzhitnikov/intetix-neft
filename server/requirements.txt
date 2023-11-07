@@ -2,7 +2,3 @@ Flask-SocketIO==5.3.4
 pyserial==3.5
 simple-websocket==0.10.1
 requests==2.31.0
-
-# GUI tests
-PyQt6==6.5.1
-
