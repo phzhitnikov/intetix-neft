@@ -117,7 +117,8 @@ class SerialDeviceThread(threading.Thread):
 
                 # Watchdog
                 if time.time() - self.last_data_time > self.MAX_IDLE_SEC_BEFORE_RESET:
-                    self._log(f"No data for {self.MAX_IDLE_SEC_BEFORE_RESET} seconds", logging.WARNING)
+                    self._log(f"No data for previous {self.MAX_IDLE_SEC_BEFORE_RESET} seconds", logging.WARNING)
+                    self.last_data_time = time.time()
                     # self.close()
                     # self.connect()
             except serial.SerialException as e:
