@@ -1,6 +1,7 @@
 import threading
 from concurrent.futures import as_completed, ThreadPoolExecutor
 from dataclasses import dataclass
+import logging
 import time
 from time import sleep
 
@@ -10,6 +11,8 @@ from serial.tools import list_ports
 import config as cfg
 from socketio_server import SocketIOServer
 from utils import read_line
+
+logging.basicConfig(format='[%(asctime)s]  %(message)s', datefmt='%H:%M:%S', level=logging.DEBUG)
 
 
 @dataclass
@@ -34,7 +37,7 @@ class DeviceCollector:
     @staticmethod
     def find_device(port):
         def _log(msg):
-            print(f'[{port.device}]: {msg}')
+            logging.info(f'[{port.device}]: {msg}')
 
         try:
             for i in range(DeviceCollector.PACKET_TRIES):
@@ -83,7 +86,7 @@ class SerialDeviceThread(threading.Thread):
                 self.alive = True
                 return True
             except serial.SerialException as e:
-                self._log(f"Failed to connect to serial port. Retry #{i} in 3 seconds. Error: {e}")
+                self._log(f"Failed to connect to serial port. Retry #{i} in 3 seconds. Error: {e}", logging.ERROR)
                 sleep(3)
 
         return False
@@ -106,7 +109,7 @@ class SerialDeviceThread(threading.Thread):
         if not hasattr(self.serial, 'cancel_read'):
             self.serial.timeout = 3
 
-        print(f"Connected to {self.serial.port}")
+        logging.info(f"Connected to {self.serial.port}")
         while self.alive and self.serial.is_open:
             try:
                 # Read all that is there or wait for one byte (blocking)
@@ -114,12 +117,12 @@ class SerialDeviceThread(threading.Thread):
 
                 # Watchdog
                 if time.time() - self.last_data_time > self.MAX_IDLE_SEC_BEFORE_RESET:
-                    self._log(f"No data for {self.MAX_IDLE_SEC_BEFORE_RESET} seconds")
+                    self._log(f"No data for {self.MAX_IDLE_SEC_BEFORE_RESET} seconds", logging.WARNING)
                     # self.close()
                     # self.connect()
             except serial.SerialException as e:
                 # Probably some I/O problem such as disconnected USB serial
-                self._log(f'Got SerialException: {str(e)}')
+                self._log(f'Got SerialException: {str(e)}', logging.ERROR)
 
                 # Try to reconnect
                 if not self.connect():
@@ -129,7 +132,7 @@ class SerialDeviceThread(threading.Thread):
                     try:
                         self.on_data_received(data)
                     except Exception as e:
-                        self._log(f'Got exception while retransmitting data: {str(e)}')
+                        self._log(f'Got exception while retransmitting data: {str(e)}', logging.ERROR)
                         break
 
         self.alive = False
@@ -145,5 +148,5 @@ class SerialDeviceThread(threading.Thread):
             self.stop()
             self.serial.close()
 
-    def _log(self, msg):
-        print(f'[{self.device_data.type} {self.device_data.id}]: {msg}')
+    def _log(self, msg, level=logging.INFO):
+        logging.log(level, f'[{self.device_data.type} {self.device_data.id}]: {msg}')
